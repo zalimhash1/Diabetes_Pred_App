@@ -8,7 +8,13 @@ app = Flask(__name__)
 # LOAD TRAINED MODEL
 # ==========================================
 
-with open("diabetes_data.pkl", "rb") as file:
+import os
+
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+
+MODEL_PATH = os.path.join(BASE_DIR, "diabetes_data.pkl")
+
+with open(MODEL_PATH, "rb") as file:
     saved = pickle.load(file)
 
 model = saved["model"]
