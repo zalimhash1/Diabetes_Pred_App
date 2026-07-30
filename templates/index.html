@@ -1,0 +1,694 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Diabetes Prediction System</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+
+    <link rel="stylesheet"
+        href="{{ url_for('static', filename='style.css') }}">
+
+</head>
+
+<body>
+
+    <!-- ===========================
+            LOADING SCREEN
+    ============================ -->
+
+    <div class="loader" id="loader">
+
+        <div class="spinner"></div>
+
+        <h3>Loading Diabetes Prediction System...</h3>
+
+    </div>
+
+
+
+    <!-- ===========================
+            NAVBAR
+    ============================ -->
+
+    <nav>
+
+        <div class="logo">
+
+            <i class="fa-solid fa-heart-pulse"></i>
+
+            Diabetes AI
+
+        </div>
+
+        <ul>
+
+            <li><a href="#home">Home</a></li>
+
+            <li><a href="#features">Features</a></li>
+
+            <li><a href="#prediction">Prediction</a></li>
+
+            <li><a href="#result">Result</a></li>
+
+        </ul>
+
+        <button id="themeBtn">
+
+            <i class="fa-solid fa-moon"></i>
+
+        </button>
+
+    </nav>
+
+
+
+    <!-- ===========================
+            HERO SECTION
+    ============================ -->
+
+    <section class="hero" id="home">
+
+        <div class="hero-left">
+
+            <span class="badge">
+
+                AI Powered Healthcare
+
+            </span>
+
+            <h1>
+
+                Diabetes Prediction
+
+                <span>Using Machine Learning</span>
+
+            </h1>
+
+            <p>
+
+                Predict the likelihood of diabetes using an intelligent
+                K-Nearest Neighbors model trained with StandardScaler
+                preprocessing for reliable healthcare assistance.
+
+            </p>
+
+            <button class="start-btn">
+
+                <i class="fa-solid fa-stethoscope"></i>
+
+                Start Prediction
+
+            </button>
+
+        </div>
+
+
+
+        <div class="hero-right">
+
+            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS8vatzY7N0MQvROEh54g6N9QXv-Oo_g0pRJv2LVFbf3Q&s=10"
+                alt="Doctor">
+
+        </div>
+
+    </section>
+    
+
+
+
+    <!-- ===========================
+            FEATURES
+    ============================ -->
+
+    <section class="stats" id="features">
+
+        <div class="card">
+
+            <i class="fa-solid fa-brain"></i>
+
+            <h2>KNN</h2>
+
+            <p>Classification Algorithm</p>
+
+        </div>
+
+        <div class="card">
+
+            <i class="fa-solid fa-chart-column"></i>
+
+            <h2>8</h2>
+
+            <p>Input Features</p>
+
+        </div>
+
+        <div class="card">
+
+            <i class="fa-solid fa-bolt"></i>
+
+            <h2>Fast</h2>
+
+            <p>Real-Time Prediction</p>
+
+        </div>
+
+        <div class="card">
+
+            <i class="fa-solid fa-shield-heart"></i>
+
+            <h2>AI</h2>
+
+            <p>Healthcare Assistant</p>
+
+        </div>
+
+    </section>
+    <!-- ===========================
+        PREDICTION SECTION
+    =========================== -->
+
+    <section class="prediction-section" id="prediction">
+
+        <div class="section-title">
+
+            <span class="badge">
+
+                Patient Assessment
+
+            </span>
+
+            <h2>
+
+                Diabetes Risk Prediction
+
+            </h2>
+
+            <p>
+
+                Complete all patient health information below. All values must fall within the permitted clinical ranges.
+
+            </p>
+
+        </div>
+
+
+        <!-- Progress -->
+
+        <div class="progress-container">
+
+            <div class="progress-bar" id="progressBar"></div>
+
+        </div>
+
+        <p class="progress-text">
+
+            Form Completion
+
+            <span id="progressText">
+
+                0%
+
+            </span>
+
+        </p>
+
+
+
+        <form
+            action="/predict"
+            method="POST"
+            id="predictionForm"
+            novalidate>
+
+            <div class="form-grid">
+
+
+                <!-- Pregnancies -->
+
+                <div class="input-box">
+
+                    <label>
+
+                        <i class="fa-solid fa-baby"></i>
+
+                        Pregnancies
+
+                    </label>
+
+                    <input
+                        type="number"
+                        name="Pregnancies"
+                        min="0"
+                        max="20"
+                        step="1"
+                        placeholder="0 - 20"
+                        required>
+
+                    <small>
+
+                        Allowed range: 0–20
+
+                    </small>
+
+                </div>
+
+
+
+                <!-- Glucose -->
+
+                <div class="input-box">
+
+                    <label>
+
+                        <i class="fa-solid fa-droplet"></i>
+
+                        Glucose
+
+                    </label>
+
+                    <input
+                        type="number"
+                        name="Glucose"
+                        min="0"
+                        max="300"
+                        step="1"
+                        placeholder="0 - 300"
+                        required>
+
+                    <small>
+
+                        Allowed range: 0–300 mg/dL
+
+                    </small>
+
+                </div>
+
+
+
+                <!-- Blood Pressure -->
+
+                <div class="input-box">
+
+                    <label>
+
+                        <i class="fa-solid fa-heart-pulse"></i>
+
+                        Blood Pressure
+
+                    </label>
+
+                    <input
+                        type="number"
+                        name="BloodPressure"
+                        min="0"
+                        max="200"
+                        step="1"
+                        placeholder="0 - 200"
+                        required>
+
+                    <small>
+
+                        Allowed range: 0–200 mmHg
+
+                    </small>
+
+                </div>
+
+
+
+                <!-- Skin Thickness -->
+
+                <div class="input-box">
+
+                    <label>
+
+                        <i class="fa-solid fa-ruler"></i>
+
+                        Skin Thickness
+
+                    </label>
+
+                    <input
+                        type="number"
+                        name="SkinThickness"
+                        min="0"
+                        max="100"
+                        step="1"
+                        placeholder="0 - 100"
+                        required>
+
+                    <small>
+
+                        Allowed range: 0–100 mm
+
+                    </small>
+
+                </div>
+
+
+
+                <!-- Insulin -->
+
+                <div class="input-box">
+
+                    <label>
+
+                        <i class="fa-solid fa-syringe"></i>
+
+                        Insulin
+
+                    </label>
+
+                    <input
+                        type="number"
+                        name="Insulin"
+                        min="0"
+                        max="900"
+                        step="1"
+                        placeholder="0 - 900"
+                        required>
+
+                    <small>
+
+                        Allowed range: 0–900 μU/mL
+
+                    </small>
+
+                </div>
+
+
+
+                <!-- BMI -->
+
+                <div class="input-box">
+
+                    <label>
+
+                        <i class="fa-solid fa-weight-scale"></i>
+
+                        Body Mass Index (BMI)
+
+                    </label>
+
+                    <input
+                        type="number"
+                        name="BMI"
+                        min="0"
+                        max="70"
+                        step="0.1"
+                        placeholder="0.0 - 70.0"
+                        required>
+
+                    <small>
+
+                        Allowed range: 0.0–70.0
+
+                    </small>
+
+                </div>
+
+
+
+                <!-- Diabetes Pedigree -->
+
+                <div class="input-box">
+
+                    <label>
+
+                        <i class="fa-solid fa-dna"></i>
+
+                        Diabetes Pedigree Function
+
+                    </label>
+
+                    <input
+                        type="number"
+                        name="DiabetesPedigreeFunction"
+                        min="0"
+                        max="3"
+                        step="0.001"
+                        placeholder="0.000 - 3.000"
+                        required>
+
+                    <small>
+
+                        Allowed range: 0.000–3.000
+
+                    </small>
+
+                </div>
+
+
+
+                <!-- Age -->
+
+                <div class="input-box">
+
+                    <label>
+
+                        <i class="fa-solid fa-user"></i>
+
+                        Age
+
+                    </label>
+
+                    <input
+                        type="number"
+                        name="Age"
+                        min="1"
+                        max="120"
+                        step="1"
+                        placeholder="1 - 120"
+                        required>
+
+                    <small>
+
+                        Allowed range: 1–120 Years
+
+                    </small>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- Buttons -->
+
+            <div class="button-group">
+
+                <button
+                    type="submit"
+                    class="predict-btn"
+                    id="predictBtn">
+
+                    <i class="fa-solid fa-stethoscope"></i>
+
+                    Predict Diabetes
+
+                </button>
+
+                <button
+                    type="reset"
+                    class="reset-btn"
+                    id="resetBtn">
+
+                    <i class="fa-solid fa-rotate-left"></i>
+
+                    Reset
+
+                </button>
+
+            </div>
+
+        </form>
+
+    </section>
+
+        <!-- ===========================
+            PREDICTION RESULT
+        ============================ -->
+
+        {% if prediction %}
+
+        <section class="result-section" id="result">
+
+            <div class="result-card {% if prediction == 'Diabetic' %}positive{% else %}negative{% endif %}">
+
+                <div class="result-icon">
+
+                    {% if prediction == "Diabetic" %}
+
+                        <i class="fa-solid fa-triangle-exclamation"></i>
+
+                    {% else %}
+
+                        <i class="fa-solid fa-circle-check"></i>
+
+                    {% endif %}
+
+                </div>
+
+                <h2>
+
+                    Prediction Result
+
+                </h2>
+
+                <h1>
+
+                    {{ prediction }}
+
+                </h1>
+
+                <p>
+
+                    {% if prediction == "Diabetic" %}
+
+                    The model predicts that the patient is likely to have Diabetes.
+
+                    {% else %}
+
+                    The model predicts that the patient is unlikely to have Diabetes.
+
+                    {% endif %}
+
+                </p>
+
+            </div>
+
+
+
+            <!-- Recommendation -->
+
+            <div class="recommendation-card">
+
+                <h2>
+
+                    <i class="fa-solid fa-notes-medical"></i>
+
+                    Health Recommendation
+
+                </h2>
+
+                <ul>
+
+                    {% if prediction == "Diabetic" %}
+
+                    <li>Consult a healthcare professional as soon as possible.</li>
+
+                    <li>Monitor blood glucose regularly.</li>
+
+                    <li>Reduce sugar intake and processed foods.</li>
+
+                    <li>Maintain a healthy body weight.</li>
+
+                    <li>Exercise at least 30 minutes daily.</li>
+
+                    <li>Follow your physician's medication plan.</li>
+
+                    {% else %}
+
+                    <li>Maintain a balanced and nutritious diet.</li>
+
+                    <li>Exercise regularly.</li>
+
+                    <li>Avoid excessive sugar consumption.</li>
+
+                    <li>Schedule routine medical checkups.</li>
+
+                    <li>Stay physically active.</li>
+
+                    <li>Maintain a healthy lifestyle.</li>
+
+                    {% endif %}
+
+                </ul>
+
+            </div>
+
+        </section>
+
+        {% endif %}
+
+
+
+        <!-- ===========================
+                FOOTER
+        ============================ -->
+
+        <footer>
+
+            <div class="footer-content">
+
+                <h2>
+
+                    Diabetes Prediction System
+
+                </h2>
+
+                <p>
+
+                    AI-powered healthcare assistant developed using Machine Learning
+                    to support early diabetes risk assessment.
+
+                </p>
+
+                <div class="footer-tech">
+
+                    <span>Python</span>
+
+                    <span>Flask</span>
+
+                    <span>Scikit-learn</span>
+
+                    <span>HTML5</span>
+
+                    <span>CSS3</span>
+
+                    <span>JavaScript</span>
+
+                </div>
+
+                <p class="copyright">
+
+                    © 2026 Diabetes Prediction System. All Rights Reserved.
+
+                </p>
+
+            </div>
+
+        </footer>
+
+
+
+        <!-- Scroll To Top -->
+
+        <button id="topBtn">
+
+            <i class="fa-solid fa-arrow-up"></i>
+
+        </button>
+
+
+
+        <!-- JavaScript -->
+
+        <script src="{{ url_for('static', filename='script.js') }}"></script>
+
+</body>
+
+</html>
